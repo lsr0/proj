@@ -32,6 +32,7 @@ extern "C" {
         z: *mut c_double,
     ) -> c_int;
     fn pj_strerrno(code: c_int) -> *const c_char;
+    fn pj_dalloc(ptr: *const c_void);
 }
 
 fn error_message(code: c_int) -> String {
@@ -54,7 +55,9 @@ impl Proj {
     /// Get the current projection's definition from `proj.4`
     pub fn def(&self) -> String {
         let rv = unsafe { pj_get_def(self.c_proj) };
-        _string(rv)
+        let ret = _string(rv);
+        unsafe { pj_dalloc(rv as *const c_void) };
+        ret
     }
     /// Project a `Point` into `target`'s coordinates
     pub fn project<T>(&self, target: &Proj, point: Point<T>) -> Point<T>
