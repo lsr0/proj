@@ -14,6 +14,8 @@ fn _string(raw_ptr: *const c_char) -> String {
 pub struct Proj {
     c_proj: *const c_void,
 }
+unsafe impl Send for Proj {}
+unsafe impl Sync for Proj {}
 
 #[link(name = "proj")]
 extern "C" {
