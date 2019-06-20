@@ -35,6 +35,9 @@ extern "C" {
     fn pj_dalloc(ptr: *const c_void);
 }
 
+// This is a non-reentrant function: uses an static char buffer
+// No replacement under the pj_ API, but we only use it before
+// panicking on an unexpected pj_transform error.
 fn error_message(code: c_int) -> String {
     let rv = unsafe { pj_strerrno(code) };
     _string(rv)
