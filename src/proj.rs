@@ -1,6 +1,6 @@
 use libc::{c_char, c_double, c_int, c_long, c_void};
 use std::ffi::CString;
-use geo::Point;
+use geo_types::Point;
 use num_traits::Float;
 use std::ffi::CStr;
 use std::str;
@@ -91,7 +91,7 @@ impl Drop for Proj {
 
 #[cfg(test)]
 mod test {
-    use geo::Point;
+    use geo_types::Point;
     use super::Proj;
 
     #[test]
